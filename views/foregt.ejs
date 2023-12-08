@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Reset</title>
+</head>
+<body>
+  <h1>Password Reset</h1>
+  <form action="/reset-password" method="POST">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="newPassword">New Password:</label>
+    <input type="password" id="newPassword" name="newPassword" required>
+    <br>
+    <input type="submit" value="Reset Password">
+  </form>
+</body>
+</html>
