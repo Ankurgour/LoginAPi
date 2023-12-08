@@ -57,6 +57,7 @@ app.post("/register",  (req, res) => {
     // bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         // Store hash in your password DB.
+        
         const newUser = new User({
             email: req.body.username,
             password : hash
@@ -66,6 +67,7 @@ app.post("/register",  (req, res) => {
           try {
              newUser.save();
             res.render("home");
+            
           } catch (err) {
             console.log(err);
           }
@@ -81,12 +83,12 @@ app.post("/register",  (req, res) => {
     
     try {
         const foundUser = await User.findOne({ email: username});
+        
         // if (foundUser && foundUser.password === password) {
         //   res.render("secrets");
         // }
         if(foundUser){
             const pass = await bcrypt.compare(password,foundUser.password);
-            // console.log("passowrd",foundUser.password);
             // bcrypt.compare(password, foundUser.password, function(err, result) {
 
                 if(pass===true){
@@ -124,17 +126,14 @@ app.post('/reset-password', async (req, res) => {
   const { email, newPassword } = req.body;
 
   try {
-    // Find the user by email in the database
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // In a real scenario, you would hash the new password before saving it
     user.password = newPassword;
 
-    // Save the updated user with the new password
     await user.save();
 
     return res.status(200).json({ message: 'Password reset successfully' });
